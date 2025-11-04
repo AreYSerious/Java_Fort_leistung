@@ -287,29 +287,8 @@ public class TransactionService {
         }
         
         // Perform all transfers
-        Connection conn = DatabaseConnection.getConnection();
-        boolean originalAutoCommit = conn.getAutoCommit();
-        try {
-            conn.setAutoCommit(false);
-            
-            for (TransferData transfer : transfers) {
-                transfer(senderUsername, transfer.recipient, transfer.amount, transfer.description);
-            }
-            
-            conn.commit();
-        } catch (Exception e) {
-            try {
-                conn.rollback();
-            } catch (SQLException rollbackEx) {
-                // Ignore rollback exception
-            }
-            throw e;
-        } finally {
-            try {
-                conn.setAutoCommit(originalAutoCommit);
-            } catch (SQLException autoCommitEx) {
-                // Ignore auto-commit exception
-            }
+        for (TransferData transferData : transfers) {
+            transfer(senderUsername, transferData.recipient, transferData.amount, transferData.description);
         }
         
         return errors; // Empty list = success
