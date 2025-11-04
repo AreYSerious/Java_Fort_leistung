@@ -38,12 +38,13 @@ public class DatabaseConnection {
      * @throws SQLException if initialization fails
      */
     private static void initializeDatabase() throws SQLException {
-        try (InputStream is = DatabaseConnection.class.getResourceAsStream("/schema.sql")) {
+        try (InputStream is = DatabaseConnection.class.getResourceAsStream("/schema.sql");
+             BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+            
             if (is == null) {
                 throw new SQLException("Could not find schema.sql resource");
             }
             
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             StringBuilder sql = new StringBuilder();
             String line;
             
