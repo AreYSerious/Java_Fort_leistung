@@ -1,4 +1,5 @@
 build/
+lib/
 *.class
 *.jar
 *.war
@@ -7,3 +8,7 @@ build/
 *.log
 *.tmp
 /tmp/
+*.mv.db
+*.trace.db
+socialmedia_db.mv.db
+socialmedia_db.trace.db
